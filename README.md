@@ -1,5 +1,7 @@
 # 🌾 AgriCrop – Smart Crop Recommendation System
 
+🔗 **Live Demo:** https://agricrop.onrender.com
+
 A simple machine learning web app that recommends the most suitable crop based on soil nutrients and pH.
 
 ## Features
