@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriCrop – Smart Crop Recommendation</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #a8e063, #56ab2f);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 { color: #2e7d32; text-align: center; margin-bottom: 6px; }
+        .subtitle { text-align: center; color: #666; margin-bottom: 24px; font-size: 14px; }
+
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #333; font-size: 14px; }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        input:focus { outline: none; border-color: #56ab2f; }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2e7d32;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover { background: #1b5e20; }
+
+        .result {
+            margin-top: 20px;
+            padding: 16px;
+            background: #e8f5e9;
+            border-left: 5px solid #2e7d32;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .result h2 { color: #2e7d32; margin-top: 4px; }
+
+        .error {
+            margin-top: 20px;
+            padding: 12px;
+            background: #ffebee;
+            border-left: 5px solid #c62828;
+            border-radius: 8px;
+            color: #c62828;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🌾 AgriCrop</h1>
+        <p class="subtitle">Smart Crop Recommendation System</p>
+
+        <form action="/predict" method="POST">
+            <label for="nitrogen">Nitrogen (N)</label>
+            <input type="number" step="any" id="nitrogen" name="nitrogen"
+                   placeholder="e.g. 90" value="{{ values.nitrogen if values else '' }}" required>
+
+            <label for="phosphorus">Phosphorus (P)</label>
+            <input type="number" step="any" id="phosphorus" name="phosphorus"
+                   placeholder="e.g. 45" value="{{ values.phosphorus if values else '' }}" required>
+
+            <label for="potassium">Potassium (K)</label>
+            <input type="number" step="any" id="potassium" name="potassium"
+                   placeholder="e.g. 40" value="{{ values.potassium if values else '' }}" required>
+
+            <label for="ph">Soil pH</label>
+            <input type="number" step="any" min="0" max="14" id="ph" name="ph"
+                   placeholder="e.g. 6.5" value="{{ values.ph if values else '' }}" required>
+
+            <button type="submit">Recommend Crop</button>
+        </form>
+
+        {% if result %}
+        <div class="result">
+            <p>Recommended Crop</p>
+           <h2>🌱 {{ result }}</h2>
+            <p>Confidence: {{ confidence }}%</p>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
